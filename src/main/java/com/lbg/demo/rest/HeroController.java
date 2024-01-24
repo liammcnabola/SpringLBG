@@ -15,7 +15,7 @@ public class HeroController {
 		return "Superhero!";
 	}
 
-	@PostMapping("/create")
+	@PostMapping("/createhero")
 	public String createHero(@RequestBody Hero newHero) {
 		return newHero.toString();
 	}
