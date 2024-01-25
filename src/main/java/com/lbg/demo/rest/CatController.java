@@ -1,6 +1,5 @@
 package com.lbg.demo.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,46 +12,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lbg.demo.domain.Cat;
+import com.lbg.demo.services.CatService;
 
 @RestController
 public class CatController {
 
-	private List<Cat> cats = new ArrayList<>();
+
+	private CatService service;
+
+	public CatController(CatService service) {
+		super();
+		this.service = service;
+	}
 
 	@PostMapping("/create")
 	public String createCat(@RequestBody Cat newCat) {
-		this.cats.add(newCat);
-		return cats.toString();
+		return this.service.createCat(newCat);
 	}
 
 
 	@GetMapping("/get")
 	public List<Cat> getCats() {
-		return cats;
+		return this.service.getCats();
 	}
 	
 	@GetMapping("/get/{id}")
 	public Cat getCat(@PathVariable int id) {
-		return this.cats.get(id);
+		return this.service.getCat(id);
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public Cat deleteCat(@PathVariable int id) {
-		return this.cats.remove(id);
+		return this.service.deleteCat(id);
 	}
 
 	@PutMapping("/update/{id}")
 	public Cat update(@PathVariable int id, @RequestBody Cat newCat) {
-		return this.cats.set(id, newCat);
+		return this.service.update(id, newCat);
 
 	}
 
 	@PatchMapping("/patch/{id}")
 	public Cat updateCat(@PathVariable int id, @RequestBody Cat catInfo) {
-		Cat cat = this.cats.get(id);
-		cat.setName(catInfo.getName());
-		cat.setBreed(catInfo.getBreed());
-		return cat;
+		return this.service.updateCat(id, catInfo);
+
 	}
 
 }
