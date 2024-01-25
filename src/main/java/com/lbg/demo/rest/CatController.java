@@ -2,6 +2,7 @@ package com.lbg.demo.rest;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,7 +27,7 @@ public class CatController {
 	}
 
 	@PostMapping("/create")
-	public String createCat(@RequestBody Cat newCat) {
+	public ResponseEntity<Cat> createCat(@RequestBody Cat newCat) {
 		return this.service.createCat(newCat);
 	}
 
@@ -36,24 +37,24 @@ public class CatController {
 		return this.service.getCats();
 	}
 	
+
 	@GetMapping("/get/{id}")
-	public Cat getCat(@PathVariable int id) {
+	public ResponseEntity<Cat> getCat(@PathVariable int id) {
 		return this.service.getCat(id);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public Cat deleteCat(@PathVariable int id) {
-		return this.service.deleteCat(id);
+	public boolean deleteCat(@PathVariable int id) {
+		return this.service.delete(id);
 	}
 
 	@PutMapping("/update/{id}")
-	public Cat update(@PathVariable int id, @RequestBody Cat newCat) {
-		return this.service.update(id, newCat);
-
+	public ResponseEntity<Cat> update(@PathVariable int id, @RequestBody Cat newCat) {
+		return this.service.updateCat(id, newCat);
 	}
 
 	@PatchMapping("/patch/{id}")
-	public Cat updateCat(@PathVariable int id, @RequestBody Cat catInfo) {
+	public ResponseEntity<Cat> updateCat(@PathVariable int id, @RequestBody Cat catInfo) {
 		return this.service.updateCat(id, catInfo);
 
 	}
